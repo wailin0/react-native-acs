@@ -55,5 +55,6 @@ repositories {
 
 dependencies {
     //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "com.facebook.react:react-native:+"
+  implementation files('libs\\acssmc-1.1.5.jar')  // From node_modules
 }

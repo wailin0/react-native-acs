@@ -1,6 +1,6 @@
 # react-native-acs
 
-React native library to comunicate with ACS nfc reader
+React native library to comunicate with ACS NFC reader
 
 ## Installation
 
@@ -11,11 +11,10 @@ npm install react-native-acs
 ## Usage
 
 ```js
-import { multiply } from "react-native-acs";
+import Reader from "react-native-acs";
 
 // ...
 
-const result = await multiply(3, 7);
 ```
 
 ## Contributing
