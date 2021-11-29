@@ -1,5 +1,5 @@
 import { DeviceEventEmitter, NativeModules, Platform } from 'react-native';
-import { EventEmitter } from "events";
+import { EventEmitter } from 'events';
 
 const LINKING_ERROR =
   `The package 'react-native-acs' doesn't seem to be linked. Make sure: \n\n` +
@@ -10,14 +10,13 @@ const LINKING_ERROR =
 const ReaderModule = NativeModules.ReaderModule
   ? NativeModules.ReaderModule
   : new Proxy(
-    {},
-    {
-      get() {
-        throw new Error(LINKING_ERROR);
-      },
-    }
-  );
-
+      {},
+      {
+        get() {
+          throw new Error(LINKING_ERROR);
+        },
+      }
+    );
 
 function hexStringToHex(hexStr: string): number[] {
   const bytes = [];
@@ -30,12 +29,11 @@ function hexStringToHex(hexStr: string): number[] {
 function hexToHexString(hex: number[]): string {
   let chars = [];
   for (let i = 0; i < hex.length; i++) {
-    chars.push(hex[i].toString(16).toUpperCase().padStart(2,"0"));
+    chars.push(hex[i].toString(16).toUpperCase().padStart(2, '0'));
   }
 
-  return chars.join("")
+  return chars.join('');
 }
-
 
 interface ReaderInfoInterface {
   readerName: string;
@@ -45,7 +43,7 @@ interface ReaderInfoInterface {
 interface ReaderModulexInterface {
   Init(): Promise<ReaderInfoInterface>;
   ConnectToCard(slotNum: number): Promise<number[]>;
-  Transmit(slotNum: number, command: number[]): Promise<number[]>
+  Transmit(slotNum: number, command: number[]): Promise<number[]>;
 }
 
 class Reader extends EventEmitter implements ReaderModulexInterface {
@@ -53,16 +51,16 @@ class Reader extends EventEmitter implements ReaderModulexInterface {
 
   constructor() {
     super();
-    const stateEvent = "onStateChange";
+    const stateEvent = 'onStateChange';
     this.listener = DeviceEventEmitter.addListener(stateEvent, (data) => {
-      this.emit(stateEvent, data)
-    })
+      this.emit(stateEvent, data);
+    });
   }
 
   async Init(): Promise<ReaderInfoInterface> {
-    await ReaderModule.Init()
+    await ReaderModule.Init();
 
-    return ReaderModule.GetReaderInfo()
+    return ReaderModule.GetReaderInfo();
   }
 
   async ConnectToCard(slotNum: number): Promise<number[]> {
@@ -73,11 +71,10 @@ class Reader extends EventEmitter implements ReaderModulexInterface {
 
   async Transmit(slotNum: number, command: number[]): Promise<number[]> {
     let request = hexToHexString(command);
-    
-    let response = await ReaderModule.Transmit(slotNum,request);    
+
+    let response = await ReaderModule.Transmit(slotNum, request);
 
     return hexStringToHex(response);
-    
   }
 }
 
