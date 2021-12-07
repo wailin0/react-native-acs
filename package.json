@@ -142,7 +142,7 @@
           "project": "tsconfig.build.json"
         }
       ],
-      ["aar", { "reverseJetify": true }]
+      "aar"
     ]
   },
   "dependencies": {
