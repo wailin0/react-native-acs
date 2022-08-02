@@ -25,8 +25,8 @@ interface ReaderInfoInterface {
 
 interface ReaderModulexInterface {
   Init(): Promise<ReaderInfoInterface>;
-  ConnectToCard(slotNum: number): Promise<number[]>;
-  Transmit(slotNum: number, command: number[]): Promise<number[]>;
+  ConnectToCard(slotNum: number): Promise<string>;
+  Transmit(slotNum: number, command: string): Promise<string>;
 }
 
 class Reader extends EventEmitter implements ReaderModulexInterface {
