@@ -46,13 +46,13 @@ class Reader extends EventEmitter implements ReaderModulexInterface {
     return ReaderModule.GetReaderInfo();
   }
 
-  async ConnectToCard(slotNum: number): Promise<number[]> {
+  async ConnectToCard(slotNum: number): Promise<string> {
     let atr = await ReaderModule.ConnectToCard(slotNum);
 
     return atr;
   }
 
-  async Transmit(slotNum: number, command: string): Promise<number[]> {
+  async Transmit(slotNum: number, command: string): Promise<string> {
     let response = await ReaderModule.Transmit(slotNum, command);
 
     return response;
