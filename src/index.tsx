@@ -18,23 +18,6 @@ const ReaderModule = NativeModules.ReaderModule
       }
     );
 
-function hexStringToHex(hexStr: string): number[] {
-  const bytes = [];
-  for (let i = 0; i < hexStr.length; i += 2) {
-    bytes.push(parseInt(hexStr.substr(i, 2), 16));
-  }
-  return bytes;
-}
-
-function hexToHexString(hex: number[]): string {
-  let chars = [];
-  for (let i = 0; i < hex.length; i++) {
-    chars.push(hex[i].toString(16).toUpperCase().padStart(2, '0'));
-  }
-
-  return chars.join('');
-}
-
 interface ReaderInfoInterface {
   readerName: string;
   numSlots: number;
@@ -66,15 +49,13 @@ class Reader extends EventEmitter implements ReaderModulexInterface {
   async ConnectToCard(slotNum: number): Promise<number[]> {
     let atr = await ReaderModule.ConnectToCard(slotNum);
 
-    return hexStringToHex(atr);
+    return atr;
   }
 
-  async Transmit(slotNum: number, command: number[]): Promise<number[]> {
-    let request = hexToHexString(command);
+  async Transmit(slotNum: number, command: string): Promise<number[]> {
+    let response = await ReaderModule.Transmit(slotNum, command);
 
-    let response = await ReaderModule.Transmit(slotNum, request);
-
-    return hexStringToHex(response);
+    return response;
   }
 }
 
